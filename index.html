@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gleam And Grace App</title>
+    <title>Gleam and Grace - Store App</title>
     <style>
         * {
             margin: 0;
@@ -55,6 +55,7 @@
             display: flex;
             list-style: none;
             gap: 2rem;
+            align-items: center;
         }
 
         nav a {
@@ -67,6 +68,27 @@
         nav a:hover {
             color: #667eea;
             transform: translateY(-2px);
+        }
+
+        .cart-icon {
+            position: relative;
+            cursor: pointer;
+            font-size: 1.5rem;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #667eea;
+            color: #fff;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
         }
 
         /* Hero Section */
@@ -172,7 +194,7 @@
             50% { opacity: 0.7; }
         }
 
-        /* Product Showcase with Loop */
+        /* Product Showcase */
         .showcase {
             padding: 6rem 0;
             position: relative;
@@ -272,25 +294,15 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 4rem;
             position: relative;
             overflow: hidden;
         }
 
-        .product-img::after {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
-            animation: rotate 10s linear infinite;
-        }
-
-        @keyframes rotate {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        .product-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 15px;
         }
 
         .product-info h3 {
@@ -387,6 +399,258 @@
             margin-bottom: 1rem;
         }
 
+        /* Shopping Cart Section */
+        .cart-section {
+            padding: 4rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .cart-section h2 {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .cart-container {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+        }
+
+        .cart-items {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 2rem;
+        }
+
+        .cart-item {
+            display: grid;
+            grid-template-columns: 100px 1fr auto auto;
+            gap: 1.5rem;
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 15px;
+            margin-bottom: 1rem;
+            align-items: center;
+        }
+
+        .cart-item-img {
+            width: 100px;
+            height: 100px;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .cart-item-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .cart-item-info h3 {
+            margin-bottom: 0.5rem;
+        }
+
+        .cart-item-info p {
+            color: #aaa;
+        }
+
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .qty-btn {
+            width: 30px;
+            height: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #fff;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .remove-btn {
+            background: rgba(255, 0, 0, 0.2);
+            border: 1px solid rgba(255, 0, 0, 0.5);
+            color: #ff6b6b;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .cart-summary {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 2rem;
+            height: fit-content;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .summary-row.total {
+            font-size: 1.5rem;
+            font-weight: bold;
+            border-bottom: none;
+            color: #667eea;
+        }
+
+        .empty-cart {
+            text-align: center;
+            padding: 4rem;
+            color: #aaa;
+        }
+
+        /* Checkout Section */
+        .checkout-section {
+            padding: 4rem 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .checkout-section h2 {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .checkout-form {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #aaa;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            color: #fff;
+            font-size: 1rem;
+        }
+
+        .payment-options {
+            margin: 2rem 0;
+        }
+
+        .payment-option {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .payment-option:hover {
+            border-color: #667eea;
+        }
+
+        .payment-option.selected {
+            border-color: #667eea;
+            background: rgba(102, 126, 234, 0.1);
+        }
+
+        .payment-option input[type="radio"] {
+            margin-right: 1rem;
+        }
+
+        .checkout-btn {
+            width: 100%;
+            padding: 1.5rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            border-radius: 10px;
+            color: #fff;
+            font-size: 1.2rem;
+            cursor: pointer;
+            margin-top: 1rem;
+        }
+
+        .checkout-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.5);
+        }
+
+        /* Order Tracking Section */
+        .tracking-section {
+            padding: 4rem 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .tracking-section h2 {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .tracking-search {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .tracking-result {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 2rem;
+        }
+
+        .tracking-status {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .status-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .status-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #667eea;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .status-icon.pending {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
         /* Contact */
         .contact {
             padding: 4rem 2rem;
@@ -399,43 +663,23 @@
             margin-bottom: 2rem;
         }
 
-        .contact-form {
-            max-width: 600px;
-            margin: 0 auto;
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 2rem 0;
         }
 
-        .contact-form input,
-        .contact-form textarea {
-            width: 100%;
-            padding: 1rem;
-            margin-bottom: 1rem;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            color: #fff;
-            font-size: 1rem;
-        }
-
-        .contact-form textarea {
-            height: 150px;
-            resize: none;
-        }
-
-        .submit-btn {
-            width: 100%;
-            padding: 1rem;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border: none;
-            border-radius: 10px;
-            color: #fff;
-            font-size: 1.2rem;
-            cursor: pointer;
+        .social-links a {
+            font-size: 2.5rem;
+            color: #667eea;
             transition: all 0.3s;
+            text-decoration: none;
         }
 
-        .submit-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.5);
+        .social-links a:hover {
+            transform: scale(1.2);
+            color: #764ba2;
         }
 
         /* Footer */
@@ -454,24 +698,6 @@
             -webkit-text-fill-color: transparent;
             font-weight: bold;
         }
-
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-
-            .animated-text {
-                font-size: 1.5rem;
-            }
-
-            nav ul {
-                gap: 1rem;
-            }
-
-            .product-card {
-                width: 300px;
-            }
-        }
     </style>
 </head>
 <body>
@@ -483,7 +709,15 @@
                 <li><a href="#home">Home</a></li>
                 <li><a href="#products">Products</a></li>
                 <li><a href="#categories">Categories</a></li>
+                <li><a href="#cart">Cart</a></li>
+                <li><a href="#tracking">Track Order</a></li>
                 <li><a href="#contact">Contact</a></li>
+                <li>
+                    <div class="cart-icon">
+                        🛒
+                        <span class="cart-count" id="cartCount">0</span>
+                    </div>
+                </li>
             </ul>
         </div>
     </nav>
@@ -496,8 +730,8 @@
             <div class="blob blob3"></div>
         </div>
         <div class="hero-content">
-            <h1>Welcome to the Future</h1>
-            <p class="animated-text">Shop Smart, Shop Modern</p>
+            <h1>Welcome to Gleam and Grace</h1>
+            <p class="animated-text">Grace in Every Glitter, Luxury in Every Detail</p>
         </div>
     </section>
 
@@ -509,94 +743,75 @@
             <div class="loop-wrapper">
                 <!-- First set of products -->
                 <div class="product-card">
-                    <div class="product-img">💍</div>
+                    <div class="product-img"><img src="https://i.postimg.cc/cJNh2Lwj/image.png" alt="Flower Earrings"></div>
                     <div class="product-info">
-                        <h3>Diamond Ring</h3>
-                        <p>Elegant and timeless</p>
-                        <div class="price">$2,499.99</div>
-                        <button class="cart-btn">Add to Cart</button>
+                        <h3>Flower Earrings</h3>
+                        <p>Elegant floral design</p>
+                        <div class="price">৳899.99</div>
+                        <button class="cart-btn" onclick="addToCart(1, 'Flower Earrings', 899.99, 'https://i.postimg.cc/cJNh2Lwj/image.png')">Add to Cart</button>
                     </div>
                 </div>
                 <div class="product-card">
-                    <div class="product-img">⌚</div>
+                    <div class="product-img"><img src="https://i.postimg.cc/sgsMmCsY/image.png" alt="Golden Jewelry Set"></div>
                     <div class="product-info">
-                        <h3>Gold Watch</h3>
-                        <p>Luxury timepiece</p>
-                        <div class="price">$3,299.99</div>
-                        <button class="cart-btn">Add to Cart</button>
+                        <h3>Golden Jewelry Set</h3>
+                        <p>Complete luxury collection</p>
+                        <div class="price">৳3,499.99</div>
+                        <button class="cart-btn" onclick="addToCart(2, 'Golden Jewelry Set', 3499.99, 'https://i.postimg.cc/sgsMmCsY/image.png')">Add to Cart</button>
                     </div>
                 </div>
                 <div class="product-card">
-                    <div class="product-img">📿</div>
+                    <div class="product-img"><img src="https://i.postimg.cc/K82BnTNh/image.png" alt="Crystal Pendant"></div>
                     <div class="product-info">
-                        <h3>Pearl Necklace</h3>
-                        <p>Classic beauty</p>
-                        <div class="price">$1,899.99</div>
-                        <button class="cart-btn">Add to Cart</button>
-                    </div>
-                </div>
-                <div class="product-card">
-                    <div class="product-img">💎</div>
-                    <div class="product-info">
-                        <h3>Sapphire Pendant</h3>
+                        <h3>Crystal Pendant</h3>
                         <p>Stunning centerpiece</p>
-                        <div class="price">$1,499.99</div>
-                        <button class="cart-btn">Add to Cart</button>
+                        <div class="price">৳1,299.99</div>
+                        <button class="cart-btn" onclick="addToCart(3, 'Crystal Pendant', 1299.99, 'https://i.postimg.cc/K82BnTNh/image.png')">Add to Cart</button>
                     </div>
                 </div>
                 <div class="product-card">
-                    <div class="product-img">👜</div>
+                    <div class="product-img"><img src="https://i.postimg.cc/W4NzQBqg/image.png" alt="Rose Gold Watch"></div>
                     <div class="product-info">
-                        <h3>Designer Handbag</h3>
-                        <p>Premium leather</p>
-                        <div class="price">$899.99</div>
-                        <button class="cart-btn">Add to Cart</button>
-                    </div>
-                </div>
-                <!-- Duplicate set for seamless loop -->
-                <div class="product-card">
-                    <div class="product-img">💍</div>
-                    <div class="product-info">
-                        <h3>Diamond Ring</h3>
-                        <p>Elegant and timeless</p>
-                        <div class="price">$2,499.99</div>
-                        <button class="cart-btn">Add to Cart</button>
+                        <h3>Rose Gold Watch</h3>
+                        <p>Timeless elegance</p>
+                        <div class="price">৳2,799.99</div>
+                        <button class="cart-btn" onclick="addToCart(4, 'Rose Gold Watch', 2799.99, 'https://i.postimg.cc/W4NzQBqg/image.png')">Add to Cart</button>
                     </div>
                 </div>
                 <div class="product-card">
-                    <div class="product-img">⌚</div>
+                    <div class="product-img"><img src="https://i.postimg.cc/B6hgqYQq/image.png" alt="Butterfly Earrings"></div>
                     <div class="product-info">
-                        <h3>Gold Watch</h3>
+                        <h3>Butterfly Earrings</h3>
+                        <p>Graceful beauty</p>
+                        <div class="price">৳749.99</div>
+                        <button class="cart-btn" onclick="addToCart(5, 'Butterfly Earrings', 749.99, 'https://i.postimg.cc/B6hgqYQq/image.png')">Add to Cart</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-img"><img src="https://i.postimg.cc/VvqvfHkL/image.png" alt="Cherry Earrings"></div>
+                    <div class="product-info">
+                        <h3>Cherry Earrings</h3>
+                        <p>Playful elegance</p>
+                        <div class="price">৳649.99</div>
+                        <button class="cart-btn" onclick="addToCart(6, 'Cherry Earrings', 649.99, 'https://i.postimg.cc/VvqvfHkL/image.png')">Add to Cart</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-img"><img src="https://i.postimg.cc/ZqNqjscN/image.png" alt="Smart Watch Rose Gold"></div>
+                    <div class="product-info">
+                        <h3>Smart Watch Rose Gold</h3>
+                        <p>Style meets technology</p>
+                        <div class="price">৳3,299.99</div>
+                        <button class="cart-btn" onclick="addToCart(7, 'Smart Watch Rose Gold', 3299.99, 'https://i.postimg.cc/ZqNqjscN/image.png')">Add to Cart</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-img"><img src="https://i.postimg.cc/mgS3FVpT/image.png" alt="Classic Watch"></div>
+                    <div class="product-info">
+                        <h3>Classic Watch</h3>
                         <p>Luxury timepiece</p>
-                        <div class="price">$3,299.99</div>
-                        <button class="cart-btn">Add to Cart</button>
-                    </div>
-                </div>
-                <div class="product-card">
-                    <div class="product-img">📿</div>
-                    <div class="product-info">
-                        <h3>Pearl Necklace</h3>
-                        <p>Classic beauty</p>
-                        <div class="price">$1,899.99</div>
-                        <button class="cart-btn">Add to Cart</button>
-                    </div>
-                </div>
-                <div class="product-card">
-                    <div class="product-img">💎</div>
-                    <div class="product-info">
-                        <h3>Sapphire Pendant</h3>
-                        <p>Stunning centerpiece</p>
-                        <div class="price">$1,499.99</div>
-                        <button class="cart-btn">Add to Cart</button>
-                    </div>
-                </div>
-                <div class="product-card">
-                    <div class="product-img">👜</div>
-                    <div class="product-info">
-                        <h3>Designer Handbag</h3>
-                        <p>Premium leather</p>
-                        <div class="price">$899.99</div>
-                        <button class="cart-btn">Add to Cart</button>
+                        <div class="price">৳2,499.99</div>
+                        <button class="cart-btn" onclick="addToCart(8, 'Classic Watch', 2499.99, 'https://i.postimg.cc/mgS3FVpT/image.png')">Add to Cart</button>
                     </div>
                 </div>
             </div>
@@ -626,6 +841,102 @@
         </div>
     </section>
 
+    <!-- Shopping Cart Section -->
+    <section class="cart-section" id="cart">
+        <h2>Shopping Cart</h2>
+        <div class="cart-container">
+            <div class="cart-items" id="cartItemsContainer">
+                <div class="empty-cart">
+                    <h2>Your cart is empty</h2>
+                    <p>Add some products to get started!</p>
+                </div>
+            </div>
+            <div class="cart-summary">
+                <h3>Order Summary</h3>
+                <div class="summary-row">
+                    <span>Subtotal:</span>
+                    <span id="cartSubtotal">৳0</span>
+                </div>
+                <div class="summary-row">
+                    <span>Delivery:</span>
+                    <span id="deliveryFee">৳50</span>
+                </div>
+                <div class="summary-row total">
+                    <span>Total:</span>
+                    <span id="cartTotal">৳50</span>
+                </div>
+                <button class="checkout-btn" onclick="scrollToCheckout()">Proceed to Checkout</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Checkout Section -->
+    <section class="checkout-section" id="checkout">
+        <h2>Checkout</h2>
+        <div class="checkout-form">
+            <form id="orderForm" onsubmit="placeOrder(event)">
+                <div class="form-group">
+                    <label>Full Name *</label>
+                    <input type="text" id="customerName" required>
+                </div>
+                <div class="form-group">
+                    <label>Phone Number *</label>
+                    <input type="tel" id="customerPhone" required>
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="customerEmail">
+                </div>
+                <div class="form-group">
+                    <label>Delivery Address *</label>
+                    <textarea id="deliveryAddress" rows="3" required></textarea>
+                </div>
+                
+                <div class="payment-options">
+                    <h3>Payment Method</h3>
+                    <div class="payment-option selected" onclick="selectPayment('bkash')">
+                        <input type="radio" name="payment" value="bkash" id="bkash">
+                        <label for="bkash">💳 bKash</label>
+                    </div>
+                    <div class="payment-option" onclick="selectPayment('cod')">
+                        <input type="radio" name="payment" value="cod" id="cod">
+                        <label for="cod">💵 Cash on Delivery</label>
+                    </div>
+                </div>
+
+                <div class="cart-summary">
+                    <div class="summary-row">
+                        <span>Subtotal:</span>
+                        <span id="checkoutSubtotal">৳0</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Delivery:</span>
+                        <span>৳50</span>
+                    </div>
+                    <div class="summary-row total">
+                        <span>Total:</span>
+                        <span id="checkoutTotal">৳50</span>
+                    </div>
+                </div>
+
+                <button type="submit" class="checkout-btn">Place Order</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Order Tracking Section -->
+    <section class="tracking-section" id="tracking">
+        <h2>Track Your Order</h2>
+        <div class="tracking-search">
+            <div class="form-group">
+                <label>Enter Order ID</label>
+                <input type="text" id="orderIdInput" placeholder="e.g., GG-20250116-001">
+            </div>
+            <button class="checkout-btn" onclick="trackOrder()">Track Order</button>
+        </div>
+        <div id="trackingResult"></div>
+    </section>
+
     <!-- Contact -->
     <section class="contact" id="contact">
         <h2>Gleam And Grace</h2>
@@ -633,6 +944,10 @@
             <p style="font-size: 1.1rem;"><strong>Address:</strong> Gandaria, Dhaka South City Corporation</p>
             <p style="font-size: 1.1rem;"><strong>Phone:</strong> <a href="tel:+8801234567890" style="color: #667eea; text-decoration: none;">+880 1234-567890</a></p>
             <p style="font-size: 1.1rem;"><strong>Email:</strong> <a href="mailto:info@gleamandgrace.com" style="color: #667eea; text-decoration: none;">info@gleamandgrace.com</a></p>
+        </div>
+        <div class="social-links">
+            <a href="https://facebook.com" target="_blank" title="Facebook">📘</a>
+            <a href="https://instagram.com" target="_blank" title="Instagram">📷</a>
         </div>
     </section>
 
@@ -642,43 +957,78 @@
     </footer>
 
     <script>
-        // Navbar scroll effect
-        window.addEventListener('scroll', () => {
-            const nav = document.getElementById('navbar');
-            if (window.scrollY > 50) {
-                nav.classList.add('scrolled');
-            } else {
-                nav.classList.remove('scrolled');
-            }
-        });
-
-        // Smooth scroll
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth' });
-                }
-            });
-        });
-
-        // Cart button click effect
-        document.querySelectorAll('.cart-btn').forEach(btn => {
-            btn.addEventListener('click', function() {
-                this.textContent = 'Added! ✓';
-                setTimeout(() => {
-                    this.textContent = 'Add to Cart';
-                }, 2000);
-            });
-        });
-
-        // Form submission
-        document.querySelector('.contact-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            alert('Thank you for your message! We will get back to you soon.');
-            this.reset();
-        });
-    </script>
 </body>
-</html>
+</html>'Rose Gold Watch', 2799.99, 'https://i.postimg.cc/W4NzQBqg/image.png')">Add to Cart</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-img"><img src="https://i.postimg.cc/B6hgqYQq/image.png" alt="Butterfly Earrings"></div>
+                    <div class="product-info">
+                        <h3>Butterfly Earrings</h3>
+                        <p>Graceful beauty</p>
+                        <div class="price">৳749.99</div>
+                        <button class="cart-btn" onclick="addToCart(5, 'Butterfly Earrings', 749.99, 'https://i.postimg.cc/B6hgqYQq/image.png')">Add to Cart</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-img"><img src="https://i.postimg.cc/VvqvfHkL/image.png" alt="Cherry Earrings"></div>
+                    <div class="product-info">
+                        <h3>Cherry Earrings</h3>
+                        <p>Playful elegance</p>
+                        <div class="price">৳649.99</div>
+                        <button class="cart-btn" onclick="addToCart(6, 'Cherry Earrings', 649.99, 'https://i.postimg.cc/VvqvfHkL/image.png')">Add to Cart</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-img"><img src="https://i.postimg.cc/ZqNqjscN/image.png" alt="Smart Watch Rose Gold"></div>
+                    <div class="product-info">
+                        <h3>Smart Watch Rose Gold</h3>
+                        <p>Style meets technology</p>
+                        <div class="price">৳3,299.99</div>
+                        <button class="cart-btn" onclick="addToCart(7, 'Smart Watch Rose Gold', 3299.99, 'https://i.postimg.cc/ZqNqjscN/image.png')">Add to Cart</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-img"><img src="https://i.postimg.cc/mgS3FVpT/image.png" alt="Classic Watch"></div>
+                    <div class="product-info">
+                        <h3>Classic Watch</h3>
+                        <p>Luxury timepiece</p>
+                        <div class="price">৳2,499.99</div>
+                        <button class="cart-btn" onclick="addToCart(8, 'Classic Watch', 2499.99, 'https://i.postimg.cc/mgS3FVpT/image.png')">Add to Cart</button>
+                    </div>
+                </div>
+                <!-- Duplicate set for seamless loop -->
+                <div class="product-card">
+                    <div class="product-img"><img src="https://i.postimg.cc/cJNh2Lwj/image.png" alt="Flower Earrings"></div>
+                    <div class="product-info">
+                        <h3>Flower Earrings</h3>
+                        <p>Elegant floral design</p>
+                        <div class="price">৳899.99</div>
+                        <button class="cart-btn" onclick="addToCart(1, 'Flower Earrings', 899.99, 'https://i.postimg.cc/cJNh2Lwj/image.png')">Add to Cart</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-img"><img src="https://i.postimg.cc/sgsMmCsY/image.png" alt="Golden Jewelry Set"></div>
+                    <div class="product-info">
+                        <h3>Golden Jewelry Set</h3>
+                        <p>Complete luxury collection</p>
+                        <div class="price">৳3,499.99</div>
+                        <button class="cart-btn" onclick="addToCart(2, 'Golden Jewelry Set', 3499.99, 'https://i.postimg.cc/sgsMmCsY/image.png')">Add to Cart</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-img"><img src="https://i.postimg.cc/K82BnTNh/image.png" alt="Crystal Pendant"></div>
+                    <div class="product-info">
+                        <h3>Crystal Pendant</h3>
+                        <p>Stunning centerpiece</p>
+                        <div class="price">৳1,299.99</div>
+                        <button class="cart-btn" onclick="addToCart(3, 'Crystal Pendant', 1299.99, 'https://i.postimg.cc/K82BnTNh/image.png')">Add to Cart</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-img"><img src="https://i.postimg.cc/W4NzQBqg/image.png" alt="Rose Gold Watch"></div>
+                    <div class="product-info">
+                        <h3>Rose Gold Watch</h3>
+                        <p>Timeless elegance</p>
+                        <div class="price">৳2,799.99</div>
+                        <button class="cart-btn" onclick="addToCart(4, 
