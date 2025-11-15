@@ -33,5 +33,5 @@ Fill checkout form and select payment method
 Place order to get Order ID
 Use Order ID in tracking section to check order status
 
-Everything is on one single scrollable page with smooth navigation! Ready to deploy on Vercel or other Render Engine
+Everything is on one single scrollable page with smooth navigation! Ready to deploy on Vercel or any other Render Engine..
 Enjoy
